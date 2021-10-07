@@ -5,15 +5,13 @@
 int main(void){
     FILE *file;
     int a, b, c, x, y, i, j;
-    char is = 'T';
+    char p = 'T';
 
     scanf("%d\n", &x);
     scanf("%d\n", &y);
 
     int **mas = (int**)malloc(y * sizeof(int*));
-    for(i = 0; i < y; i++){
-        mas[i] = (int*)malloc(x * sizeof(int));
-    }
+    for(i = 0; i < y; i++) mas[i] = (int*)malloc(x * sizeof(int));
 
     file = fopen("DZ2.gv", "w");
     fputs("graph{\n", file);
@@ -29,34 +27,28 @@ int main(void){
         if(a == 0){
             fprintf(file, "\t%d\n", i+1);
 
-            if(is == 'T'){
-               is = 'F';
-            }
+            if(p == 'T') p = 'F';
         }
         getchar();
     }
 
-    printf("%c\n", is);
+    if(p == 'T') printf("True");
+    else printf("False");
+
     for(i = 0; i < x; i++){
         b = 0, c = 0;
         fputc('\t', file);
         for(j = 0; j < y; j++){
             if(mas[j][i] == 1){
-                if(b == 0){
-                    b = j + 1;
-                }
+                if(b == 0) b = j + 1;
                 else{
                     c = j + 1;
                     break;
                 }
             }
         }
-        if(b + c == b){
-            fprintf(file, "%d--%d", b, b);
-        }
-        else{
-            fprintf(file, "%d--%d", b, c);
-        }
+        if(b + c == b) fprintf(file, "%d--%d", b, b);
+        else fprintf(file, "%d--%d", b, c);
         fputc('\n', file);
     }
     fputc('}', file);
